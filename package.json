@@ -1,0 +1,30 @@
+{
+  "name": "invoicexpress-wrapper",
+  "version": "0.1.0",
+  "description": "Wrapper for InvoiceXpress V2 (JSON) api",
+  "main": "invoice-xpress-wrapper.js",
+  "scripts": {
+    "start": "node invoice-xpress-wrapper.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zelxy/InvoiceXpress-Wrapper.git"
+  },
+  "keywords": [
+    "invoice",
+    "xpress",
+    "wrapper",
+    "nodejs"
+  ],
+  "author": "José Pereira",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Zelxy/InvoiceXpress-Wrapper/issues"
+  },
+  "homepage": "https://github.com/Zelxy/InvoiceXpress-Wrapper#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "jshint": "^2.9.6"
+  }
+}
