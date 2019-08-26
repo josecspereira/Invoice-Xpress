@@ -94,11 +94,11 @@ module.exports = class InvoiceXpressWrapper {
         if (!order.isEuMember) {
             invoice.tax_exemption = 'M99';
         }
+        if (serie) invoice.sequence = serie;
         let response = await axios.post(`https://${this.accountName}.app.invoicexpress.com/${type}s.json?api_key=${this.apiKey}`, {
             invoice
         }, HEADER);
         response = response.data.invoice;
-        console.log('my response', response.id);
         if (state) {
             response = await axios.put(`https://${this.accountName}.app.invoicexpress.com/invoice/${response.id}/change-state.json?api_key=${this.apiKey}`, {
                 invoice: {
