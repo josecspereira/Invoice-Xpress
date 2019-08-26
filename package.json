@@ -24,7 +24,8 @@
   },
   "homepage": "https://github.com/Zelxy/InvoiceXpress-Wrapper#readme",
   "dependencies": {
-    "axios": "^0.18.0",
-    "jshint": "^2.9.6"
+    "axios": "^0.18.1",
+    "jshint": "^2.9.6",
+    "moment": "^2.24.0"
   }
 }

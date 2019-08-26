@@ -1,10 +1,11 @@
 const axios = require('axios');
+const moment = require('moment');
 
 const HEADER = {
     'accept': 'application/json',
     'content-type': 'application/json'
 };
-class InvoiceXpressWrapper {
+module.exports = class InvoiceXpressWrapper {
     /**
      * 
      * @param {String} accountName 
@@ -62,7 +63,9 @@ class InvoiceXpressWrapper {
      */
     createClient(client) {
         return new Promise((resolve, reject) => {
-            axios.post(`https://${accountName}.app.invoicexpress.com/clients.json?api_key=${apiKey}`, { client }, header)
+            axios.post(`https://${this.accountName}.app.invoicexpress.com/clients.json?api_key=${apiKey}`, {
+                    client
+                }, header)
                 .then(response => {
                     if (response.status == 201) {
                         resolve(response.data);
@@ -73,16 +76,36 @@ class InvoiceXpressWrapper {
                 });
         });
     }
-    /**
-     * WIP
-     * @param {Object} order 
-     * @param {Object} user 
-     * @param {Boolean} isFinal 
-     * @param {Boolean} sendEmail 
-     */
-    createInvoiceReceipt(order, user, isFinal, sendEmail) {
 
+    //TODO: handle errors
+    async createInvoiceReceipt(items, order, user, state, sendEmail, type, serie, dueDate) {
+        let invoice = {
+            date: moment().format('DD/MM/YYYY'),
+            due_date: moment().format('DD/MM/YYYY'),
+            reference: order._id,
+            client: {
+                name: user.name,
+                code: user.code,
+                email: user.email,
+                fiscal_id: user.fiscalId,
+            },
+            items,
+        };
+        if (!order.isEuMember) {
+            invoice.tax_exemption = 'M99';
+        }
+        let response = await axios.post(`https://${this.accountName}.app.invoicexpress.com/${type}s.json?api_key=${this.apiKey}`, {
+            invoice
+        }, HEADER);
+        response = response.data.invoice;
+        console.log('my response', response.id);
+        if (state) {
+            response = await axios.put(`https://${this.accountName}.app.invoicexpress.com/invoice/${response.id}/change-state.json?api_key=${this.apiKey}`, {
+                invoice: {
+                    state,
+                }
+            }, HEADER);
+        }
+        return response;
     }
 }
-
-module.exports = InvoiceXpressWrapper;
