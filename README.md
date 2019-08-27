@@ -8,7 +8,7 @@ Demo Features enabled:
 - List all sequences or a specific one
 
 TODO
-- Add missig useful methods, like edit customer
+- Add missing useful methods, like edit customer
 - Add option system to make syntax clearer
-- Add cachinc for sequences and customers so we can save some api calls (that seem to take longer than they should)
+- Add caching for sequences and customers so we can save some api calls (that seem to take longer than they should)
 
