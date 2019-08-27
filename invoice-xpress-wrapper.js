@@ -7,9 +7,9 @@ const HEADER = {
 };
 module.exports = class InvoiceXpressWrapper {
     /**
-     * 
-     * @param {String} accountName 
-     * @param {String} apiKey 
+     *
+     * @param {String} accountName
+     * @param {String} apiKey
      */
     constructor(accountName, apiKey) {
         if (!accountName || accountName == void 0) {
@@ -43,7 +43,7 @@ module.exports = class InvoiceXpressWrapper {
     }
     /**
      * Checks if a client with the id sent by parameter exists, returning the found user...
-     * @param {String} clientId 
+     * @param {String} clientId
      */
     checkClient(clientId) {
         return new Promise((resolve, reject) => {
@@ -59,7 +59,7 @@ module.exports = class InvoiceXpressWrapper {
     }
     /**
      * Creates a new client with the client object sent by arguments. Object format must comply to InvoiceXpress API.
-     * @param {Object} client 
+     * @param {Object} client
      */
     createClient(client) {
         return new Promise((resolve, reject) => {
@@ -107,5 +107,20 @@ module.exports = class InvoiceXpressWrapper {
             }, HEADER);
         }
         return response;
+    }
+
+ 	/**
+     *
+     * @param {String} sequenceId Optional sequenceId, if no value is given then all sequences will be listed
+     */
+    async getSequences(sequenceId = null) {
+        let result;
+        if (sequenceId) {
+            result = await axios.get(`https://${this.accountName}.app.invoicexpress.com/sequences/${sequenceId}.json?api_key=${this.apiKey}`, HEADER);
+        } else {
+            result = await axios.get(`https://${this.accountName}.app.invoicexpress.com/sequences.json?api_key=${this.apiKey}`, HEADER);
+        }
+        result = result.data.sequences;
+        return result;
     }
 }
