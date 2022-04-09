@@ -26,6 +26,6 @@
   "dependencies": {
     "axios": "^0.18.1",
     "jshint": "^2.9.6",
-    "moment": "^2.24.0"
+    "moment": "^2.29.2"
   }
 }
